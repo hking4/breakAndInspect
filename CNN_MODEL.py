@@ -5,7 +5,11 @@ from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 import tensorflow as tf
+IMG_SIZE = 50
+LR = 1e-3
 
+## Return skeleton for CNN model.
+## This should be called anytime the TF model is loaded 
 def getTfModel():
     with tf.device('/gpu:0'):
         sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
@@ -31,3 +35,7 @@ def getTfModel():
         convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
         model = tflearn.DNN(convnet, tensorboard_dir='log')
         return model
+
+## Return image size used in pre-processing
+def getImgSize():
+    return IMG_SIZE
