@@ -10,7 +10,7 @@ def send(body):
     receiver_email = "tyler.dugan@rocketmail.com"
     password = "BreakInspect1+"
     message = """\
-    Subject: Violation Log
+    Subject: Violation Log\n
 
     {}.""".format(body)
 
