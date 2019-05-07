@@ -14,7 +14,6 @@ def send(body):
     password = pw.getPW('.\emailPW.bin')
     message = """\
     Subject: Violation Log\n
-
     {}.""".format(body)
 
     context = ssl.create_default_context()
