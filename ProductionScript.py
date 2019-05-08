@@ -45,8 +45,8 @@ def run():
 	        img_num = data[1] #filename
 	        img_data = data[0]
 
-	        insertquery = 'INSERT INTO SCREENSHOTS(SS_USER, SCREENSHOT_PATH, image_name) VALUES (%s, %s, %s)' #USER IS terminal:windows user
-	        val = (os.environ['COMPUTERNAME'] + ':' + getpass.getuser(),'.\\dataset\\single_image_test\\' + img_num, img_num)
+	        insertquery = 'INSERT INTO SCREENSHOTS(SS_USER, SCREENSHOT_PATH, image_name, VIOLATION) VALUES (%s, %s, %s, %s)' #USER IS terminal:windows user
+	        val = (os.environ['COMPUTERNAME'] + ':' + getpass.getuser(),'.\\dataset\\single_image_test\\' + img_num, img_num, '0')
 	        cursor.execute(insertquery, val)
 	        db.commit()
 	        
