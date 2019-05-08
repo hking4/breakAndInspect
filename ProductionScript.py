@@ -45,17 +45,26 @@ def run():
 	        img_num = data[1] #filename
 	        img_data = data[0]
 
-	        insertquery = 'INSERT INTO SCREENSHOTS(SS_USER, SCREENSHOT_PATH, image_name, VIOLATION) VALUES (%s, %s, %s, %s)' #USER IS terminal:windows user
+	        insertquery = 'INSERT INTO TEMP(SS_USER, SCREENSHOT_PATH, image_name, VIOLATION) VALUES (%s, %s, %s, %s)'
+
+			##LOG ALL SCREENSHOTS TO TEMP
+
 	        val = (os.environ['COMPUTERNAME'] + ':' + getpass.getuser(),'.\\dataset\\single_image_test\\' + img_num, img_num, '0')
 	        cursor.execute(insertquery, val)
 	        db.commit()
-	        
+
+	        #COPY TO SCREENSHOTS IF NOT EXIST
+	        insertquery = 'INSERT INTO SCREENSHOTS(SS_USER, SCREENSHOT_PATH, image_name, VIOLATION) SELECT SS_USER, SCREENSHOT_PATH, image_name, VIOLATION FROM TEMP WHERE TEMP.SCREENSHOT_PATH NOT IN (SELECT SCREENSHOT_PATH FROM SCREENSHOTS)'
+	        cursor.execute(insertquery)
+	        db.commit()
+
+	        #CLEAR TEMP TABLE
+	        deletequery = 'DELETE FROM TEMP'
+	        cursor.execute(deletequery)
+	        db.commit()
+
 	        orig = img_data 
 	        data = img_data.reshape(CNN_MODEL.getImgSize(),CNN_MODEL.getImgSize(),1)
 	        model_out = model.predict([data])[0]
 	        
 	        f.write('{},{}\n'.format(img_num, model_out[1]))
-	        
-	        ## File prints chance of image being an allowed website and not social media
-	        ## Any label <.5 is ok, anything >= .51 is considered social media
-	        ## I.E. any images from testing data with ID > 177 should have a very low label

@@ -1,6 +1,9 @@
 ##Reusable model skeleton to be referenced in all scripts needing the trained CNN model
 
 import tflearn
+
+#new stuff
+import warnings
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
@@ -11,6 +14,7 @@ LR = 1e-3
 ## Return skeleton for CNN model.
 ## This should be called anytime the TF model is loaded 
 def getTfModel():
+    warnings.filterwarnings("ignore")
     with tf.device('/gpu:0'):
         sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
         #sess = tf.Session()
