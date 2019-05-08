@@ -1,0 +1,2 @@
+model_checkpoint_path: "c:\\COSC_490_Project_TestEnv\\socialmedia-4_27-0.001-6conv-basic-video.model"
+all_model_checkpoint_paths: "c:\\COSC_490_Project_TestEnv\\socialmedia-4_27-0.001-6conv-basic-video.model"

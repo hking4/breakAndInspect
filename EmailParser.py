@@ -20,14 +20,14 @@ def run():
     for i in logFiles:
         file = open(os.path.join(pathName, i), newline='')
         reader = csv.reader(file, delimiter=',')
-        #print('\n'+i)   ##print log file name 
+        print('\n'+i)   ##print log file name 
         
         for row in reader:
             content = list(row[i] for i in [0,1]) ##[0,1] are included columns from CNN csv logs
 
             print (content)
-            if float(content[1]) < .5:
-                #print('Violation')  
+            if float(content[1]) > .5:
+                print('Violation')  
                 index.append(content[0])
 
     db = dbc.connect()
@@ -46,5 +46,5 @@ def run():
         message += 'PC/USER- ' + user + ', Image Path - ' + path + '\n'
         ##LOG TO VIOLATION TABLE
         l.log(user, path)
-    #print(message)
+    print(message)
     EmailCreateSend.send(message)
